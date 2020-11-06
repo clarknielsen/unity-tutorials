@@ -49,7 +49,7 @@ First, let's disable collisions between the ball and mesh collider. We can accom
 
 ![The Layer dropdown for the Sphere includes a Basic Shape option](./images/05-add-layer.png)
 
-Do the same with the `sphere1_default` mesh collider, creating and then assigning a layer called "Bowl Mesh."
+Do the same with the `sphere1_default` child object, creating and then assigning a layer called "Bowl Mesh."
 
 Next, go to Edit > Project Settings > Physics and scroll down to the Layer Collision Matrix section. Uncheck collisions between "Basic Shape" and "Bowl Mesh," as the following image shows:
 
@@ -57,9 +57,9 @@ Next, go to Edit > Project Settings > Physics and scroll down to the Layer Colli
 
 Now the bowl's mesh collider will still interact with the rest of the game world but ignore the ball. We'll rebuild a collider specifically for the ball. Fair warning: this is the tedious part!
 
-Right click the `Bowl` object in the Hierarchy pane and select "Create Empty." Rename the empty object to "Bottom" and add a Box Collider component to this object. Use the `sphere1_default` mesh as a guide to resize and position the `Bottom` object so that it overlaps with the bottom of the mesh.
+Right click the `Bowl` object in the Hierarchy pane and select "Create Empty." Rename the empty object to "Bottom" and add a Box Collider component to this object. Use the `sphere1_default` mesh as a guide to resize and position the `Bottom` object so that it fits nicely inside where the bottom of the mesh is.
 
-You'll then need to create several more empty box colliders to basically rebuild the skeletal structure of the bowl. The end result should look something like the following image:
+You'll then need to create several more empty box colliders to basically rebuild the skeletal structure of the bowl. The end result should look something like the following image, when the mesh is temporarily hidden:
 
 ![Several box colliders make up the shape of a bowl](./images/07-box-colliders.png)
 
@@ -96,7 +96,7 @@ private void OnTriggerEnter(Collider other)
 }
 ```
 
-Play the scene and watch the console for the message to appear. Now try positioning the bowl upside down over the ball, so it falls on top. The message will probably still trigger, because they _did_ touch, even though this shouldn't be a valid win condition. We'll need to make sure the bowl is upright.
+Play the scene and watch the console for the message to appear. Now try positioning the bowl upside down over the ball, so it falls on top and covers it. The message will probably still trigger, because they _did_ touch, even though this shouldn't be a valid win condition. We'll need to make sure the bowl is upright.
 
 One way to know the bowl is upright is if the ball's `y` position is greater than the bowl's `Bottom` object position. Let's update the `OnTriggerEnter()` method to find the `Bottom` object and compare coordinates:
 
